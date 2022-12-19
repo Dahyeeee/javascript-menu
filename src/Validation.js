@@ -1,10 +1,14 @@
 const { ERROR_MESSAGE, NUMBER } = require("./Constant");
 
 const Validation = {
-  validateNameLength(name) {
-    if (!Validation.isNameLengthTwoToFour(name)) {
+  validateNamesLength(names) {
+    if (!Validation.isEveryNameInRange(names)) {
       throw new Error(ERROR_MESSAGE.notValidNameLength);
     }
+  },
+
+  isEveryNameInRange(names) {
+    return names.every((name) => Validation.isNameLengthTwoToFour(name));
   },
 
   isNameLengthTwoToFour(name) {

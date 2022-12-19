@@ -19,10 +19,12 @@ const RandomMachine = {
   getFood(category) {
     const menus = CATEGORY[category];
     const length = menus.length;
-    const tempArr = [...Array(length)].map((_, i) => i);
+    const tempArr = [...Array(length)].map((_, i) => i + 1);
     const random = Random.shuffle(tempArr)[0];
-    return menus[random];
+    console.log(menus[random], random);
+    return menus[random - 1];
   },
 };
 
+RandomMachine.getFood("한식");
 module.exports = RandomMachine;

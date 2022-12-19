@@ -23,7 +23,7 @@ class Coach {
     this.#pickyFoods = pickyFoods;
   }
 
-  isFoodRecommandble(foodOfToday) {
+  isFoodRecommandable(foodOfToday) {
     if (this.#menus.includes(foodOfToday)) {
       return false;
     }

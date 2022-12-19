@@ -4,11 +4,11 @@ const Coach = require("./Coach");
 const { NEW_LINE, MESSAGE, RESULT } = require("./Constant");
 const { readCoachName, readCoachPickyFoods } = require("./InputView");
 const { print, printResult } = require("./OutputView");
-const { getMenu, getFood } = require("./RandomMachine");
+const { getFood } = require("./RandomMachine");
 const {
   validateCoachNumber,
-  validateNameLength,
   validatePickyFoods,
+  validateNamesLength,
 } = require("./Validation");
 
 class App {
@@ -29,6 +29,7 @@ class App {
     const names = nameInput.split(",").map((name) => name.trim());
     try {
       validateCoachNumber(names);
+      validateNamesLength(names);
       this.makeEachCoachField(names);
       this.getPickyFoods(0);
     } catch (e) {
@@ -39,13 +40,7 @@ class App {
 
   makeEachCoachField(names) {
     names.forEach((name, ind) => {
-      try {
-        validateNameLength(name);
-        this.#coaches.push(new Coach(name, ind));
-      } catch (e) {
-        print(e);
-        this.getCoachName();
-      }
+      this.#coaches.push(new Coach(name, ind));
     });
   }
 
