@@ -67,20 +67,20 @@ class App {
       this.getPickyFoods(coach.getNumber() + 1);
     } catch (e) {
       print(e);
-      this.getPickyFoods(coach);
+      this.getPickyFoods(coach.getNumber());
     }
   }
 
   recommandFoods(coach) {
     while (coach.getMenuLength() < 5) {
-      this.getOnlyFood(coach);
+      this.recommandFood(coach);
     }
   }
 
-  getOnlyFood(coach) {
+  recommandFood(coach) {
     const day = coach.getMenuLength();
     const food = getFood(this.#category.getCategoryOfDay(day));
-    if (coach.compareFood(food)) {
+    if (coach.isFoodRecommandable(food)) {
       coach.addFoodtoMenu(food);
     }
   }
