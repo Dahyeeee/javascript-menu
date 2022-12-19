@@ -1,4 +1,5 @@
 const { Console } = require("@woowacourse/mission-utils");
+const Category = require("./Category");
 const Coach = require("./Coach");
 const { NEW_LINE, MESSAGE, RESULT } = require("./Constant");
 const { readCoachName, readCoachPickyFoods } = require("./InputView");
@@ -12,7 +13,13 @@ const {
 
 class App {
   #coaches = [];
-  #categories = [];
+  #category;
+
+  play() {
+    print(MESSAGE.start);
+    this.#category = new Category(5, 2);
+    this.getCoachName();
+  }
 
   getCoachName() {
     readCoachName(this.actWithCoachName.bind(this));
@@ -64,23 +71,6 @@ class App {
     }
   }
 
-  setCategories() {
-    while (this.#categories.length < 5) {
-      this.setCategoryOfDay();
-    }
-  }
-
-  setCategoryOfDay() {
-    const categoryOfDay = getMenu();
-    const numberOfCategory = this.#categories.filter(
-      (category) => category === categoryOfDay
-    ).length;
-
-    if (numberOfCategory < 2) {
-      this.#categories.push(categoryOfDay);
-    }
-  }
-
   recommandFoods(coach) {
     while (coach.getMenuLength() < 5) {
       this.getOnlyFood(coach);
@@ -88,8 +78,8 @@ class App {
   }
 
   getOnlyFood(coach) {
-    const menu = coach.getMenuLength();
-    const food = getFood(this.#categories[menu]);
+    const day = coach.getMenuLength();
+    const food = getFood(this.#category.getCategoryOfDay(day));
     if (coach.compareFood(food)) {
       coach.addFoodtoMenu(food);
     }
@@ -101,17 +91,9 @@ class App {
 
   endGame() {
     const resultLines = this.getResultLines();
-    const categories = `[ 카테고리 | ${this.#categories.join(
-      RESULT.divider
-    )} ]`;
+    const categories = this.#category.getCategoryString();
     printResult(resultLines, categories);
     Console.close();
-  }
-
-  play() {
-    print(MESSAGE.start);
-    this.setCategories();
-    this.getCoachName();
   }
 }
 

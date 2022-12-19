@@ -5,7 +5,7 @@ const RandomMachine = {
   CATEGORY_START_NUMBER: 1,
   CATEGORY_END_NUMBER: 5,
 
-  getMenu() {
+  getCategory() {
     const category =
       CATEGORY_MATCH[
         Random.pickNumberInRange(
