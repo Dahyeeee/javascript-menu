@@ -23,18 +23,6 @@ class Coach {
     this.#pickyFoods = pickyFoods;
   }
 
-  compareCategory(categoryOfToday) {
-    const sameCategory = this.#menus.filter(
-      ([category, _]) => category === categoryOfToday
-    ).length;
-
-    if (sameCategory >= 2) {
-      return false;
-    }
-
-    return true;
-  }
-
   compareFood(foodOfToday) {
     if (this.#menus.includes(foodOfToday)) {
       return false;
@@ -47,8 +35,8 @@ class Coach {
     return true;
   }
 
-  addFoodtoMenu(category, food) {
-    this.#menus.push([category, food]);
+  addFoodtoMenu(food) {
+    this.#menus.push(food);
   }
 
   getMenuLength() {
@@ -56,8 +44,7 @@ class Coach {
   }
 
   getResult() {
-    const foods = this.#menus.map(([_, food]) => food);
-    return `[ ${this.#name} | ${foods.join(RESULT.divider)} ]`;
+    return `[ ${this.#name} | ${this.#menus.join(RESULT.divider)} ]`;
   }
 }
 

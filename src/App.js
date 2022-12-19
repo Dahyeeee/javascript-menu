@@ -12,7 +12,7 @@ const {
 
 class App {
   #coaches = [];
-  #category = [];
+  #categories = [];
 
   getCoachName() {
     readCoachName(this.actWithCoachName.bind(this));
@@ -56,39 +56,42 @@ class App {
     try {
       validatePickyFoods(pickyFoods);
       coach.setPickyFoods(pickyFoods);
-      while (coach.getMenuLength() < 5) {
-        this.recommandFoods(coach);
-      }
+      this.recommandFoods(coach);
+      this.getPickyFoods(coach.getNumber() + 1);
     } catch (e) {
       print(e);
       this.getPickyFoods(coach);
     }
-    this.getPickyFoods(coach.getNumber() + 1);
+  }
+
+  setCategories() {
+    while (this.#categories.length < 5) {
+      this.setCategoryOfDay();
+    }
+  }
+
+  setCategoryOfDay() {
+    const categoryOfDay = getMenu();
+    const numberOfCategory = this.#categories.filter(
+      (category) => category === categoryOfDay
+    ).length;
+
+    if (numberOfCategory < 2) {
+      this.#categories.push(categoryOfDay);
+    }
   }
 
   recommandFoods(coach) {
-    const category = getMenu();
-    const number = coach.getNumber();
-    number === 0
-      ? this.initallizeCateogry(coach, category)
-      : this.getOnlyFood(coach);
-  }
-
-  initallizeCateogry(coach, category) {
-    if (coach.compareCategory(category)) {
-      const food = getFood(category);
-      if (coach.compareFood(food)) {
-        coach.addFoodtoMenu(category, food);
-        this.#category.push(category);
-      }
+    while (coach.getMenuLength() < 5) {
+      this.getOnlyFood(coach);
     }
   }
 
   getOnlyFood(coach) {
     const menu = coach.getMenuLength();
-    const food = getFood(this.#category[menu]);
-    if (coach.compareFood(this.#category[menu])) {
-      coach.addFoodtoMenu(this.#category[menu], food);
+    const food = getFood(this.#categories[menu]);
+    if (coach.compareFood(food)) {
+      coach.addFoodtoMenu(food);
     }
   }
 
@@ -98,16 +101,20 @@ class App {
 
   endGame() {
     const resultLines = this.getResultLines();
-    const categories = `[ 카테고리 | ${this.#category.join(RESULT.divider)} ]`;
+    const categories = `[ 카테고리 | ${this.#categories.join(
+      RESULT.divider
+    )} ]`;
     printResult(resultLines, categories);
     Console.close();
   }
 
   play() {
     print(MESSAGE.start);
+    this.setCategories();
     this.getCoachName();
   }
 }
 
 new App().play();
+
 module.exports = App;
