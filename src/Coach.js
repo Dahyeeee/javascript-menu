@@ -4,19 +4,13 @@ class Coach {
   #name;
   #pickyFoods;
   #menus = [];
-  #number;
 
-  constructor(name, number) {
+  constructor(name) {
     this.#name = name;
-    this.#number = number;
   }
 
   getName() {
     return this.#name;
-  }
-
-  getNumber() {
-    return this.#number;
   }
 
   setPickyFoods(pickyFoods) {

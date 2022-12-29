@@ -29,6 +29,8 @@ const NUMBER = Object.freeze({
   minCoachNumber: 2,
   maxCoachNumber: 5,
   maxPickFood: 2,
+  maxCategories: 5,
+  sameCategoryLimit: 2,
 });
 
 module.exports = { MESSAGE, RESULT, NEW_LINE, ERROR_MESSAGE, NUMBER };

@@ -14,6 +14,7 @@ const {
 class App {
   #coaches = [];
   #category;
+  #coachflag = 0;
 
   play() {
     print(MESSAGE.start);
@@ -39,8 +40,8 @@ class App {
   }
 
   makeEachCoachField(names) {
-    names.forEach((name, ind) => {
-      this.#coaches.push(new Coach(name, ind));
+    names.forEach((name) => {
+      this.#coaches.push(new Coach(name));
     });
   }
 
@@ -59,11 +60,11 @@ class App {
       validatePickyFoods(pickyFoods);
       coach.setPickyFoods(pickyFoods);
       this.recommandFoods(coach);
-      this.getPickyFoods(coach.getNumber() + 1);
+      this.#coachflag += 1;
     } catch (e) {
       print(e);
-      this.getPickyFoods(coach.getNumber());
     }
+    this.getPickyFoods(this.#coachflag);
   }
 
   recommandFoods(coach) {
